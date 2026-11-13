@@ -12,6 +12,11 @@
 
 # testing
 /coverage
+/test-results/
+/playwright-report/
+
+# captures de contrôle générées à la demande par scripts/capture.mjs
+/docs/qa/
 
 # next.js
 /.next/
@@ -39,3 +44,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local pnpm cache
+/.pnpm-store/

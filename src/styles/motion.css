@@ -1,0 +1,144 @@
+/*
+ * Mouvement — sobre et bref.
+ *
+ * Changement de page : aucun effet de sortie, la nouvelle page remplace
+ * l'ancienne immédiatement. Son en-tête « se pose » : le texte est lisible dès
+ * la première image (opacité 0,6) et glisse de 20 px vers sa place. Plus bas,
+ * chaque bloc monte en fondu lorsqu'il entre à l'écran, une seule fois.
+ *
+ * Seules `transform` et `opacity` sont animées, hors accordéon (hauteur
+ * pilotée par Radix).
+ */
+
+/* --- Entrée de page ------------------------------------------------------ */
+
+@keyframes settle-in {
+  from {
+    opacity: 0.6;
+  }
+}
+
+@keyframes settle-up {
+  from {
+    opacity: 0.6;
+    transform: translate3d(0, 1.25rem, 0);
+  }
+}
+
+@keyframes settle-right {
+  from {
+    opacity: 0.6;
+    transform: translate3d(-1.25rem, 0, 0);
+  }
+}
+
+/* --- Apparition au défilement (voir components/shared/reveal.tsx) -------- */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.25rem, 0);
+  }
+}
+
+/*
+ * Sans JavaScript, aucun attribut n'est posé : le contenu reste visible.
+ * Seuls les blocs situés sous l'écran au chargement passent par « pending ».
+ */
+[data-reveal="pending"] {
+  opacity: 0;
+}
+
+[data-reveal="visible"] {
+  animation: fade-up 0.7s ease-out both;
+}
+
+/* --- Retour d'interface -------------------------------------------------- */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -0.25rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes menu-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@keyframes pulse-soft {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* --- Préférences et impression ------------------------------------------- */
+
+/* « Réduire les animations » : tout est ramené à l'état final, rien n'est masqué. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  [data-reveal] {
+    opacity: 1 !important;
+  }
+}
+
+@media print {
+  [data-reveal] {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+}

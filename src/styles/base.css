@@ -1,0 +1,84 @@
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-padding-top: calc(var(--header-height) + 1.5rem);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /*
+   * Défilement fluide, y compris au changement de page : la nouvelle page
+   * s'affiche à la position où l'on se trouvait, puis la fenêtre remonte en
+   * douceur. Next.js applique ce réglage à ses navigations tant que l'attribut
+   * `data-scroll-behavior` n'est pas posé sur <html>.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /*
+   * Au changement de page, Next.js fait défiler jusqu'au premier élément de la
+   * page, le <main>. Cette marge fait aboutir ce défilement tout en haut du
+   * document, au-dessus de l'en-tête et du bandeau d'avis.
+   */
+  main {
+    scroll-margin-top: 100vh;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p,
+  li {
+    text-wrap: pretty;
+  }
+
+  /* Les surfaces portent leur fond et leur couleur de texte. */
+  [data-surface] {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+
+  /* Focus clavier : anneau net, jamais supprimé, adapté à la surface. */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background-color: var(--orange-300);
+    color: var(--ink-950);
+  }
+
+  a,
+  button,
+  summary,
+  input,
+  select,
+  textarea {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+}

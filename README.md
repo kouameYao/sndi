@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SNDI — proposition de refonte
 
-## Getting Started
+Proposition indépendante de refonte du site de la Société Nationale de Développement
+Informatique (SNDI), Côte d'Ivoire.
 
-First, run the development server:
+> **Ce projet n'est pas le site officiel de la SNDI.** Il a été réalisé sans mandat,
+> à partir des contenus publics de <https://web.sndi.ci/> et <https://www.sndi.ci/>.
+> Le logo et les contenus cités appartiennent à la SNDI. Un avis le rappelle en tête
+> de chaque page, et le site n'est pas indexable.
+
+## Démarrer
+
+Prérequis : Node.js 24 et pnpm 11. Le premier build télécharge la police Inter,
+ensuite servie par le site.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm dev            # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Build de production :
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm build
+pnpm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Commandes
 
-## Learn More
+| Commande                            | Rôle                                                    |
+| ----------------------------------- | ------------------------------------------------------- |
+| `pnpm dev`                          | Serveur de développement                                |
+| `pnpm build` / `pnpm start`         | Build et serveur de production                          |
+| `pnpm lint`                         | ESLint                                                  |
+| `pnpm typecheck`                    | Types de routes et TypeScript strict                    |
+| `pnpm format` / `pnpm format:check` | Prettier                                                |
+| `pnpm test`                         | Tests unitaires et de composants (Vitest)               |
+| `pnpm test:e2e`                     | Tests de bout en bout (Playwright) — après `pnpm build` |
 
-To learn more about Next.js, take a look at the following resources:
+Les tests de bout en bout utilisent le navigateur Chrome installé sur la machine.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contenu du site
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Page                                 | Adresse                                                                    |
+| ------------------------------------ | -------------------------------------------------------------------------- |
+| Accueil                              | `/`                                                                        |
+| Institution                          | `/institution`                                                             |
+| Expertises                           | `/expertises`                                                              |
+| Détail d'une expertise (onze pages)  | `/expertises/[slug]` — page prioritaire : `/expertises/etudes-et-conseils` |
+| Solutions                            | `/solutions`                                                               |
+| Détail d'une solution (quatre pages) | `/solutions/[slug]`                                                        |
+| Réalisations                         | `/realisations`                                                            |
+| Actualités                           | `/actualites`                                                              |
+| Contact                              | `/contact`                                                                 |
+| Mentions légales, Confidentialité    | `/mentions-legales`, `/confidentialite`                                    |
 
-## Deploy on Vercel
+## Organisation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```text
+src/app          Routes (App Router)
+src/components   Composants transverses : brand, layout, shared, ui
+src/features     Fonctionnalités : home, expertises, solutions, news, contact, institution
+src/lib          Configuration et utilitaires
+src/styles       Tokens de design, base, mouvement
+src/types        Modèles de contenu
+e2e              Tests de bout en bout
+scripts          Captures, diagnostic, mesure des Web Vitals
+docs             Documentation
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Les contenus vivent dans `src/features/*/data` et sont lus par des fonctions d'accès
+asynchrones : les remplacer par des appels à un CMS ne demande aucun changement dans
+les pages.
+
+## Documentation
+
+| Document                                                       | Contenu                                                      |
+| -------------------------------------------------------------- | ------------------------------------------------------------ |
+| [`docs/content-audit.md`](docs/content-audit.md)               | Sources, informations vérifiées, hypothèses, contenus exclus |
+| [`docs/validation-checklist.md`](docs/validation-checklist.md) | Ce que la SNDI doit valider avant toute diffusion            |
+| [`docs/design-system.md`](docs/design-system.md)               | Direction artistique, tokens, composants, mouvement          |
+| [`docs/technical.md`](docs/technical.md)                       | Architecture, rendu, styles, sécurité, limites               |
+| [`docs/quality-report.md`](docs/quality-report.md)             | Contrôles exécutés et résultats                              |
+
+## Avant toute diffusion
+
+1. Obtenir l'accord de la SNDI pour l'usage de son logo et de ses contenus.
+2. Faire valider les textes, coordonnées et références
+   ([liste complète](docs/validation-checklist.md)).
+3. Compléter les mentions légales : éditeur et hébergeur.

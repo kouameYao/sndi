@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <!-- Icône de la proposition : un fragment de trame. Ce n'est pas le logo de la SNDI. -->
+  <rect width="64" height="64" rx="14" fill="#0b1410"/>
+  <rect x="25" y="25" width="14" height="14" rx="2" fill="#f5842a"/>
+  <rect x="25" y="7" width="14" height="14" rx="2" fill="#00a854"/>
+  <rect x="25" y="43" width="14" height="14" rx="2" fill="#00a854"/>
+  <rect x="7" y="25" width="14" height="14" rx="2" fill="#00a854"/>
+  <rect x="43" y="25" width="14" height="14" rx="2" fill="#00a854"/>
+</svg>

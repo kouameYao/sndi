@@ -1,0 +1,202 @@
+/*
+ * Tokens de design — proposition SNDI.
+ *
+ * 1. Primitives : couleurs brutes. Orange 500 et vert 500 sont extraits du logo
+ *    officiel (Logo-SNDI-officiel.png). Le reste des échelles en est dérivé.
+ * 2. Sémantiques : rôles (background, primary…) consommés par les composants.
+ * 3. Surfaces : `data-surface` redéfinit localement les rôles sémantiques.
+ *
+ * Ces valeurs sont une palette de travail, pas la charte officielle de la SNDI.
+ */
+
+:root {
+  /* Orange — logo : 500 */
+  --orange-300: #fab274;
+  --orange-500: #f5842a;
+  --orange-600: #e2731b;
+  --orange-700: #ad4e08;
+
+  /* Vert — logo : 500 */
+  --green-100: #dcefe4;
+  --green-500: #00a854;
+  --green-700: #00703a;
+  --green-800: #00552c;
+
+  /* Gris neutres, très légèrement teintés de vert */
+  --ink-950: #0b1410;
+  --ink-800: #1c2a23;
+  --ink-600: #47554e;
+  --ink-500: #5a6861;
+  --ink-400: #84918a;
+  --ink-200: #dce1de;
+  --ink-100: #ecefed;
+  --ink-50: #f4f5f4;
+  --white: #fff;
+
+  /* Mise en page */
+  --container-max: 80rem;
+  --gutter: 1.25rem;
+  --section-y: clamp(3.5rem, 2.5rem + 4vw, 6rem);
+  --header-height: 4.5rem;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --gutter: 2rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --gutter: 3rem;
+    --header-height: 5rem;
+  }
+}
+
+/* Rôles sémantiques — surface claire par défaut */
+:root,
+[data-surface="default"] {
+  --background: var(--white);
+  --foreground: var(--ink-950);
+  --surface: var(--white);
+  --surface-muted: var(--ink-50);
+  --primary: var(--orange-500);
+  --primary-hover: var(--orange-600);
+  --primary-foreground: var(--white);
+  --primary-strong: var(--orange-700);
+  --secondary: var(--green-700);
+  --secondary-foreground: var(--white);
+  --accent: var(--green-500);
+  --accent-strong: var(--green-700);
+  --border: var(--ink-200);
+  --border-strong: var(--ink-400);
+  --muted: var(--ink-500);
+  --success: var(--green-700);
+  --warning: #8a5a00;
+  --destructive: #b3261e;
+  --ring: var(--ink-950);
+}
+
+[data-surface="muted"] {
+  --background: var(--ink-50);
+  --surface: var(--white);
+  --surface-muted: var(--ink-100);
+}
+
+/* Surface « vert institution » : bandeau d'avis, encart du hero, pied de page */
+[data-surface="inverse"] {
+  --background: var(--green-800);
+  --foreground: var(--white);
+  --surface: var(--green-700);
+  --surface-muted: var(--green-700);
+  --primary-strong: var(--orange-300);
+  --accent-strong: var(--green-100);
+  --border: rgb(255 255 255 / 0.22);
+  --border-strong: rgb(255 255 255 / 0.5);
+  --muted: var(--green-100);
+  --ring: var(--white);
+}
+
+@theme inline {
+  /* La palette par défaut de Tailwind est retirée : seuls les tokens existent. */
+  --color-*: initial;
+
+  --color-white: var(--white);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-strong: var(--primary-strong);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-muted: var(--muted);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-destructive: var(--destructive);
+  --color-ring: var(--ring);
+  --color-ink-950: var(--ink-950);
+
+  --font-sans:
+    var(--font-inter), "Helvetica Neue", Arial, ui-sans-serif, system-ui,
+    sans-serif;
+}
+
+@theme {
+  /* Échelle typographique fluide (320 px → 1440 px) */
+  --text-display: clamp(2.25rem, 1.6rem + 2.9vw, 3.75rem);
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.02em;
+
+  --text-h1: clamp(2rem, 1.6rem + 1.8vw, 3rem);
+  --text-h1--line-height: 1.12;
+  --text-h1--letter-spacing: -0.015em;
+
+  --text-h2: clamp(1.625rem, 1.4rem + 1vw, 2.25rem);
+  --text-h2--line-height: 1.2;
+  --text-h2--letter-spacing: -0.01em;
+
+  --text-h3: clamp(1.125rem, 1.07rem + 0.25vw, 1.3125rem);
+  --text-h3--line-height: 1.35;
+
+  --text-lead: clamp(1.0625rem, 1.02rem + 0.22vw, 1.25rem);
+  --text-lead--line-height: 1.55;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.5;
+
+  /* Élévation réservée aux éléments qui flottent réellement (menu déroulant) */
+  --shadow-menu: 0 12px 28px -12px rgb(11 20 16 / 0.28);
+
+  /* Animations d'interface (voir motion.css pour les images clés) */
+  --animate-fade-in: fade-in 0.2s ease-out both;
+  --animate-fade-out: fade-out 0.15s ease-in both;
+  --animate-menu-in: menu-in 0.18s ease-out both;
+  --animate-menu-out: menu-out 0.12s ease-in both;
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.16s ease-out;
+  --animate-pulse-soft: pulse-soft 1.4s ease-in-out infinite;
+
+  /* Entrée de page : le contenu est lisible d'emblée et « se pose ». */
+  --animate-settle-in: settle-in 1s ease-out both;
+  --animate-settle-up: settle-up 0.7s ease-out both;
+  --animate-settle-right: settle-right 0.7s ease-out both;
+}
+
+/* Conteneur de page : 1280 px de contenu + gouttières */
+@utility container-page {
+  width: 100%;
+  max-width: calc(var(--container-max) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Grille de page : 4 colonnes (mobile), 8 (tablette), 12 (bureau) */
+@utility grid-page {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 1rem;
+
+  @media (min-width: 48rem) {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    column-gap: 1.5rem;
+  }
+
+  @media (min-width: 64rem) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+  }
+}
+
+@utility section-y {
+  padding-block: var(--section-y);
+}
