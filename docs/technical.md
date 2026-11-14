@@ -183,6 +183,13 @@ L'exploration reste ouverte dans `robots.txt`, sans quoi les robots ne pourraien
 lire cette consigne. La variable `ALLOW_INDEXING=true` lève les deux protections ; elle
 n'a de sens que si la SNDI reprend le projet.
 
+## Déploiement
+
+Le site se déploie sur Vercel depuis la branche `main`. `vercel.json` déclare le
+framework (`"framework": "nextjs"`) : sans lui, un projet Vercel dont le réglage
+« Framework Preset » vaut « Other » lance bien `next build`, mais ne publie que le
+dossier `public/` — toutes les pages répondent alors 404, seul le logo est servi.
+
 ## Tests et contrôles
 
 | Commande            | Contenu                                                             |
